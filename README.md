@@ -1,149 +1,109 @@
-# Lab: Contractors Lab
+# Python Flask Contracts Lab
 
----
+This lab is a simple Flask application that serves contract and customer data via HTTP endpoints. It includes unit tests to verify the API's behavior.
 
-## Overview
+##  Project Structure
 
-Now it is time for you to build your own request responses!
+```
+python-flask-contracts-lab/
+├── server/
+│   ├── app.py                # Flask application
+│   ├── __init__.py
+│   └── testing/
+│       └── app_test.py       # Pytest-based test suite
+├── Pipfile                   # Pipenv environment file (optional)
+├── requirements.txt          # Dependency file (optional)
+└── README.md                 # You're here
+```
 
-You are working for a company that manages contracts between two parties. You need to manage sensitive data, and as such, you need to build two requests:
+##  Features
 
-- One for **customer information**
-- One for **contract information**
+* `GET /contract/<id>`: Retrieve contract information by ID.
+* `GET /customer/<customer_name>`: Check if a customer exists.
+* Includes a test suite using `pytest`.
 
-You will be using two new response codes:
+##  Installation
 
-- **204**: Successful response but no data to send (e.g., confirming a customer exists without sharing data).
-- **404**: Not found — we cannot find the requested data.
+1. **Clone the repo:**
 
----
+   ```bash
+   git clone <your-repo-url>
+   cd python-flask-contracts-lab
+   ```
 
-## Tasks
+2. **Set up your environment:**
 
-### Task 1: Define the Problem
+   If using `pyenv` and `pipenv` (Flatiron default):
 
-Build the following routes:
+   ```bash
+   pyenv install 3.8.13
+   pyenv local 3.8.13
+   pipenv install
+   pipenv shell
+   ```
 
-- `/contract/<id>`
-- `/customer/<customer_name>`
+   If using `venv` and `pip`:
 
----
+   ```bash
+   python3.8 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-### Task 2: Determine the Design
+3. **Fix dependencies (if needed):**
 
-#### App Routes:
+   ```bash
+   pip install "Flask==2.0.3" "Werkzeug==2.0.3"
+   ```
 
-- `GET /contract/<id>`
-  - **200**: Contract found — return contract information.
-  - **404**: Contract not found.
+##  Running the Server
 
-- `GET /customer/<customer_name>`
-  - **204**: Customer found — no information returned (sensitive).
-  - **404**: Customer not found.
+```bash
+python server/app.py
+```
 
----
+This starts the Flask server at `http://localhost:5555`.
 
-### Task 3: Develop the Code
+##  Running Tests
 
-- Initialize Flask
-- Set up routes
-- Configure responses
+```bash
+pytest -x
+```
 
----
+Tests include:
 
-### Task 4: Test and Refine
+* Valid and invalid contract lookups
+* Valid and invalid customer lookups
+* Empty 204 responses for existing customers
 
-- Debug and test during development using the provided test suite and Flask instance.
+##  Example API Usage
 
----
+### `GET /contract/1`
 
-### Task 5: Document and Maintain
+**Response:**
 
-- Commit as you go with meaningful messages.
-- Push commit history to GitHub periodically and when the lab is complete.
+```json
+{
+  "id": 1,
+  "contract_information": "This contract is for John and building a shed"
+}
+```
 
----
+### `GET /customer/bob`
 
-## Tools and Resources
+**Response:**
 
-- **GitHub Repo**: *Link to be provided*
-- **Flask Quickstart**: [https://flask.palletsprojects.com/en/stable/quickstart/](https://flask.palletsprojects.com/en/stable/quickstart/)
+* `204 No Content` if customer exists
+* `404 Not Found` if not
 
----
+##  Requirements
 
-## Instructions
+* Python 3.8 (recommended: `3.8.13`)
+* Flask 2.x
+* Werkzeug <2.1
+* pytest
 
-### Set Up
+##  Notes
 
-Before coding:
-
-1. **Fork and Clone**
-   - Go to the provided GitHub repository link.
-   - Fork the repository to your GitHub account.
-   - Clone the forked repository to your local machine.
-
-2. **Open and Run**
-   - Open the project in VSCode.
-   - Run `pipenv install` to install dependencies.
-   - Run `pipenv shell` to activate the Python shell.
-
----
-
-### Task 1: Define the Problem
-
-Build the following routes:
-
-- `/contract/<id>`
-- `/customer/<customer_name>`
-
----
-
-### Task 2: Determine the Design
-
-#### App Routes:
-
-- `/contract/<id>`
-  - **200**: Contract found — return information
-  - **404**: Contract not found
-
-- `/customer/<customer_name>`
-  - **204**: Customer found — return no information
-  - **404**: Customer not found
-
----
-
-### Task 3: Develop, Test, and Refine the Code
-
-1. Create a **feature branch**.
-2. Build the following routes:
-
-#### `/contract/<id>`
-
-- If the contract ID is found in the given array:
-  - Return contract information with a **200** response.
-- If not found:
-  - Return a **404** response.
-
-#### `/customer/<customer_name>`
-
-- If the customer name is found:
-  - Return a **204** response with an empty body.
-- If not found:
-  - Return a **404** response.
-
-3. Push the feature branch and open a PR on GitHub.
-4. Merge into `main`.
-
----
-
-### Task 4: Document and Maintain
-
-#### Best Practices:
-
-- Add comments to explain logic and purpose.
-- Clarify code intent for other developers.
-- Include a screenshot of completed work in the README.
-- Update the README to reflect functionality using [https://makeareadme.com](https://makeareadme.com).
-- Delete stale branches on GitHub.
-- Remove unnecessary or commented-out code.
-- Update `.gitignore` if needed to exclude sensitive data
+* Be sure to use the correct Python version (Flatiron recommends 3.8.x).
+* Some newer versions of `Werkzeug` are incompatible with Flask <2.1.
